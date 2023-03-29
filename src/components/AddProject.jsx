@@ -11,8 +11,13 @@ function AddProject({fetchProjects}) {
   const handleSubmit = async(e) => {
     e.preventDefault()
     const body = {title, description}
+
+    // Get the token from the localStorage
+  const storedToken = localStorage.getItem('authToken');
+
+
     try{
-        await axios.post(APIurl, body)
+        await axios.post(APIurl, body,  { headers: { Authorization: `Bearer ${storedToken}` } })
         setTitle("");
         setDescription("");
         fetchProjects();

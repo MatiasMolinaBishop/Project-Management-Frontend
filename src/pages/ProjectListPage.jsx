@@ -10,9 +10,10 @@ const ProjectListPage = () => {
     const APIurl = 'http://localhost:5005/api/projects'
 
     const fetchProjects = async() => {
+        const storedToken = localStorage.getItem("authToken");
 
         try{
-            const response = await axios.get(APIurl)
+            const response = await axios.get(APIurl, { headers: { Authorization: `Bearer ${storedToken}` } })
             console.log(response.data[0].title)
             setProjects(response.data)
         }catch(err){

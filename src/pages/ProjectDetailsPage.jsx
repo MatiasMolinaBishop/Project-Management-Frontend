@@ -15,9 +15,10 @@ function ProjectDetailsPage (props) {
   const fetchProject = async() => {
 
     console.log(projectId) //====== >  {id: '641c3570eecb9794f8e7ae4a'} it retunrs the req.params as an object. So we must access its value with the key of id
+    const storedToken = localStorage.getItem("authToken");
 
     try{
-        const response = await axios.get(`http://localhost:5005/api/projects/${projectId.id}`)
+        const response = await axios.get(`http://localhost:5005/api/projects/${projectId.id}`, { headers: { Authorization: `Bearer ${storedToken}` } })
         console.log(response)
         setProject(response.data)
 

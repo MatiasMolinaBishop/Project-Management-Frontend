@@ -15,9 +15,11 @@ function EditProjectPage(props) {
         const fetchProject = async () => {
 
             console.log(projectId) //====== >  {id: '641c3570eecb9794f8e7ae4a'} it retunrs the req.params as an object. So we must access its value with the key of id
+            // Get the token from the localStorage
+            const storedToken = localStorage.getItem('authToken');
 
             try {
-                const response = await axios.get(`http://localhost:5005/api/projects/${projectId.id}`)
+                const response = await axios.get(`http://localhost:5005/api/projects/${projectId.id}`, { headers: { Authorization: `Bearer ${storedToken}` } })
                 console.log(response)
                 setTitle(response.data.title)
                 setDescription(response.data.description)
@@ -38,9 +40,11 @@ function EditProjectPage(props) {
         e.preventDefault()
         const requestBody = { title, description };
         console.log(requestBody)
+        // Get the token from the localStorage
+        const storedToken = localStorage.getItem('authToken');
 
         try {
-            await axios.put(`http://localhost:5005/api/projects/${projectId.id}`, requestBody)
+            await axios.put(`http://localhost:5005/api/projects/${projectId.id}`, requestBody, { headers: { Authorization: `Bearer ${storedToken}` } })
             console.log('project updated')
             navigate(`/projects/${projectId.id}`)
 
@@ -51,9 +55,11 @@ function EditProjectPage(props) {
 
     const deleteProject = async (e) => {
         e.preventDefault()
+        // Get the token from the localStorage
+        const storedToken = localStorage.getItem('authToken');
 
         try {
-            await axios.delete(`http://localhost:5005/api/projects/${projectId.id}`)
+            await axios.delete(`http://localhost:5005/api/projects/${projectId.id}`, { headers: { Authorization: `Bearer ${storedToken}` } })
             console.log('PROJECT DELETED')
             navigate(`/projects`)
 

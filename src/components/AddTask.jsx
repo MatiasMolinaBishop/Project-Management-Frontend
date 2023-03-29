@@ -14,8 +14,11 @@ function AddTask(props) {
     let projectId = props.id
     const requestBody = { title, description, projectId };
 
+     // Get the token from the localStorage
+    const storedToken = localStorage.getItem('authToken');
+
     try{
-        await axios.post(` http://localhost:5005/api/tasks`, requestBody)
+        await axios.post(` http://localhost:5005/api/tasks`, requestBody, { headers: { Authorization: `Bearer ${storedToken}` } })
         console.log('TASK  CREATED')
         props.fetchProject()
 
